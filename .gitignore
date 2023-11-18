@@ -1,0 +1,6 @@
+# Python
+**/__pycache__
+**/.venv
+
+# Mongo
+services/db/vol
