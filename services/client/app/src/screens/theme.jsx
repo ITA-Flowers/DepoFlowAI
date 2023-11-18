@@ -9,6 +9,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "var(--bg-300)",
+        },
+      },
+    },
   },
 });
 
