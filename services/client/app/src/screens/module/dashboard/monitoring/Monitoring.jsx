@@ -8,12 +8,12 @@ import "./Monitoring.css";
 const Monitoring = () => {
   // Logika generowania wykresu typu linia
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className="content">
       <Grid item xs={3}>
-        <Paper elevation={3} className="container sidebar-dsh">
+        <Paper elevation={3} className="container sidebar-dsh-nt">
           <Notification />
         </Paper>
-        <Paper elevation={3} className=" container sidebar-dsh">
+        <Paper elevation={3} className=" container sidebar-dsh-filter">
           <Filters />
         </Paper>
       </Grid>

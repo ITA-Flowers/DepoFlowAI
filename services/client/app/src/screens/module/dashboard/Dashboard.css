@@ -1,17 +1,10 @@
 @import url("../../styles.css");
 
 .dashboard-container {
-  min-height: 80vh;
-  background-color: var(--bg-300);
+  min-height: 100%;
+  min-width: 100%;
+  background-color: var(--bg-200) !important;
   display: flex;
   position: relative;
   flex-direction: column;
-}
-
-.container {
-  flex-grow: 1;
-  display: flex;
-  background-color: var(--bg-300);
-  padding: 20px;
-  color: var(--text-100);
 }

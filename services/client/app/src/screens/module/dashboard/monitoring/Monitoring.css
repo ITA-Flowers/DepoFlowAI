@@ -1,11 +1,29 @@
-.sidebar-dsh {
-  background-color: var(--bg-200);
+.content{
+  padding: 2rem;
+}
+
+.sidebar-dsh-nt {
+  color: var(--text-100);
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, var(--primary-100),var(--primary-200));
+}
+
+.sidebar-dsh-filter {
+  background-color: var(--bg-300) !important;
   color: var(--text-100);
   margin-bottom: 1rem;
 }
 
 .chart-dsh {
-  background-color: var(--bg-200);
+  background-color: var(--bg-300) !important;
   color: var(--text-100);
   margin-bottom: 1rem;
+}
+
+.container {
+  flex-grow: 1;
+  display: flex;
+  background-color: var(--bg-300);
+  padding: 1rem;
+  color: var(--text-100);
 }
