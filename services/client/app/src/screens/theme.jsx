@@ -13,6 +13,9 @@ const theme = createTheme({
   palette: {
     mode: "dark", // Dodaj tryb ciemny, jeśli to jest motyw ciemny
   },
+  palette: {
+    mode : 'dark'
+  },
 });
 
 export default theme;
