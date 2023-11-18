@@ -72,13 +72,13 @@
   
   /* Stylizacja dla linków */
   a {
-    color: var(--accent-100);
+    color: white;
+    transition: .2s;
+    font-size: var(--font-size-h6);
   }
   
   /* Stylizacja dla linków w stanie najechania */
-  a:hover {
-    color: var(--accent-200);
-  }
+  
   
   /* Dodatkowe style dla elementów, dostosuj według potrzeb */
   
