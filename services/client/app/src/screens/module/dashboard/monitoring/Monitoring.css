@@ -5,11 +5,11 @@
 .sidebar-dsh-nt {
   color: var(--text-100);
   margin-bottom: 1rem;
-  background: linear-gradient(to right, var(--primary-100),var(--primary-200));
+  background: linear-gradient(to right, var(--primary-100),var(--primary-200)) !important;
 }
 
 .sidebar-dsh-filter {
-  background-color: var(--bg-300) !important;
+  background-color: var(--bg-100) !important;
   color: var(--text-100);
   margin-bottom: 1rem;
 }
@@ -25,5 +25,5 @@
   display: flex;
   background-color: var(--bg-300);
   padding: 1rem;
-  color: var(--text-100);
+  color: var(--text-100) !important;
 }

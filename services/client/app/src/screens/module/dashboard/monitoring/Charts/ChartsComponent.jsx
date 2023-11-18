@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -26,19 +26,20 @@ const data = [
 const dataSource = [
   { id: 0, name: "Oprocentowanie" },
   { id: 1, name: "Czas trwania" },
-  { id: 3, name: "Liczba nowych ofert" },
-];
-
-const buttons = [
-  <Button key="one">One</Button>,
-  <Button key="two">Two</Button>,
-  <Button key="three">Three</Button>,
+  { id: 2, name: "Liczba nowych ofert" },
 ];
 
 const Chart = () => {
   const yKeys = Object.keys(data[0]).filter(
     (key) => key !== "name" && key !== "x"
   );
+
+  const [activeButton, setActiveButton] = useState(0); // Indeks aktywnego przycisku
+
+  const handleButtonClick = (index) => {
+    setActiveButton(index);
+    // logika po kliknięciu przycisku
+  };
 
   return (
     <div style={{ width: 100 + "%" }}>
@@ -54,7 +55,13 @@ const Chart = () => {
       >
         <ButtonGroup size="small" aria-label="small button group">
           {dataSource.map((item) => (
-            <Button key={item.id}>{item.name}</Button>
+            <Button
+              key={item.id}
+              onClick={() => handleButtonClick(item.id)}
+              variant={item.id === activeButton ? "contained" : "outlined"}
+            >
+              {item.name}
+            </Button>
           ))}
         </ButtonGroup>
       </Box>
@@ -75,7 +82,7 @@ const Chart = () => {
           />
           <YAxis
             label={{
-              value: dataSource[1]?.name, // podmiana wyświetlania
+              value: dataSource[activeButton]?.name, // podmiana wyświetlania
               angle: -90,
               position: "insideLeft",
             }}
