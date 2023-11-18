@@ -2,5 +2,10 @@
 **/__pycache__
 **/.venv
 
-# Mongo
+# Database
 services/db/vol
+**/*.session.sql
+
+# Scripts prototypes
+**/*.ipynb
+**/tools

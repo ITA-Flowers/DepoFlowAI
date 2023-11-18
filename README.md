@@ -30,7 +30,7 @@ Frontend app developed with React JS
 
 #### DB
 
-NoSQL MongoDB docker container
+Relational SQL MariaDB docker container
 
 #### Scrapper
 
