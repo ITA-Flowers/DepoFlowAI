@@ -5,6 +5,8 @@ from .__meta import (TITLE,
                     VERSION,
                     TAGS_METADATA)
 
+from .routes import db_router
+
 def init_api() -> FastAPI:
     api = FastAPI(
         title=TITLE,
@@ -12,5 +14,7 @@ def init_api() -> FastAPI:
         version=VERSION,
         openapi_tags=TAGS_METADATA
     )
+    
+    api.include_router(db_router)
     
     return api
