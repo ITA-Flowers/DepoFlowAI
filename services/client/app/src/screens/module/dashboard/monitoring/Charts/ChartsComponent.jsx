@@ -1,8 +1,8 @@
 import React from "react";
 
-const LineChart = () => {
+const Charts = () => {
   // Logika generowania wykresu typu linia
   return <div> Komponent wykresu </div>;
 };
 
-export default LineChart;
+export default Charts;

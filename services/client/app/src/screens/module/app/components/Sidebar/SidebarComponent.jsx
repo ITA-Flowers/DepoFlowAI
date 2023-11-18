@@ -8,7 +8,7 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/monitoring">Monitoring</Link>
+            <Link to="/">Monitoring</Link>
           </li>
           <li>
             <Link to="/predykcja">Predykcja</Link>

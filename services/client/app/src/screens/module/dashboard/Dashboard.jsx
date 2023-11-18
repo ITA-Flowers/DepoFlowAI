@@ -1,15 +1,20 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import Monitoring from "./monitoring/Monitoring";
+import Footer from "./footer/Footer";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   // Logika generowania wykresu typu linia
   return (
-    <>
-      <Routes>
-        <Route path="/monitoring" element={<Monitoring />}></Route>
-      </Routes>
-    </>
+    <div className="dashboard-container">
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Monitoring />} />
+        </Routes>
+      </div>
+      <Footer />
+    </div>
   );
 };
 

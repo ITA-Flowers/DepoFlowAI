@@ -1,0 +1,11 @@
+.sidebar-dsh {
+  background-color: var(--bg-200);
+  color: var(--text-100);
+  margin-bottom: 1rem;
+}
+
+.chart-dsh {
+  background-color: var(--bg-200);
+  color: var(--text-100);
+  margin-bottom: 1rem;
+}

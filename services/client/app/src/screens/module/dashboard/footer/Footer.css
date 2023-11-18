@@ -1,0 +1,12 @@
+/* Footer.css */
+.footer {
+  color: var(--text-300);
+  text-align: center;
+  padding: 0.2rem;
+  margin-top: auto;
+}
+
+.footer p {
+  font-size: 0.7rem;
+  font-style: italic;
+}
