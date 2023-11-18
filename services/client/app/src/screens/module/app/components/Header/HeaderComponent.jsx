@@ -4,7 +4,7 @@ import "./HeaderComponent.css";
 const Header = ({ title }) => {
   return (
     <header className="header">
-      <h4>{title}</h4>
+      <h3>{title}</h3>
     </header>
   );
 };
