@@ -1,13 +1,85 @@
-:root{
-    --primary-100:#6A00FF;
-    --primary-200:#a64aff;
-    --primary-300:#ffb1ff;
-    --accent-100:#00E5FF;
-    --accent-200:#00829b;
-    --text-100:#FFFFFF;
-    --text-200:#e0e0e0;
-    --bg-100:#1A1A1A;
-    --bg-200:#292929;
-    --bg-300:#404040;
-      
-}
+/* Deklaracje zmiennych kolorów i tła w :root */
+:root {
+    --primary-100: #6A00FF;
+    --primary-200: #a64aff;
+    --primary-300: #ffb1ff;
+    --accent-100: #00E5FF;
+    --accent-200: #00829b;
+    --text-100: #FFFFFF;
+    --text-200: #e0e0e0;
+    --bg-100: #1A1A1A;
+    --bg-200: #292929;
+    --bg-300: #404040;
+  
+    --font-family: 'Lato', sans-serif; /* Wybór czcionki dla całej strony */
+    --font-weight-light: 300; /* Grubość czcionki - light */
+    --font-weight-regular: 400; /* Grubość czcionki - regular */
+    --font-weight-bold: 700; /* Grubość czcionki - bold */
+    --font-weight-extra-bold: 900; /* Grubość czcionki - extra bold */
+  
+    --base-font-size: 16px; /* Rozmiar bazowy czcionki */
+    --line-height: 1.6; /* Wysokość linii */
+  
+    --font-size-h1: 2.5rem; /* Rozmiar czcionki dla nagłówka h1 w jednostkach rem */
+    --font-size-h2: 2rem; /* Rozmiar czcionki dla nagłówka h2 w jednostkach rem */
+    --font-size-h3: 1.8rem; /* Rozmiar czcionki dla nagłówka h3 w jednostkach rem */
+    --font-size-h4: 1.5rem; /* Rozmiar czcionki dla nagłówka h4 w jednostkach rem */
+    --font-size-h5: 1.2rem; /* Rozmiar czcionki dla nagłówka h5 w jednostkach rem */
+    --font-size-h6: 1rem; /* Rozmiar czcionki dla nagłówka h6 w jednostkach rem */
+  }
+  
+  /* Import czcionki z Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+  
+  /* Stylizacja dla całego body */
+  body {
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
+    line-height: var(--line-height);
+    color: var(--text-100);
+    background-color: var(--bg-100);
+  }
+  
+  /* Stylizacja dla nagłówków od h1 do h6 */
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h3 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h4 {
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h5 {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h6 {
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  /* Stylizacja dla linków */
+  a {
+    color: var(--accent-100);
+  }
+  
+  /* Stylizacja dla linków w stanie najechania */
+  a:hover {
+    color: var(--accent-200);
+  }
+  
+  /* Dodatkowe style dla elementów, dostosuj według potrzeb */
+  
