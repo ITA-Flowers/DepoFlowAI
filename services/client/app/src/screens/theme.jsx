@@ -9,13 +9,9 @@ const theme = createTheme({
         },
       },
     },
-    MuiTable: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "var(--bg-300)",
-        },
-      },
-    },
+  },
+  palette: {
+    mode: "dark", // Dodaj tryb ciemny, jeśli to jest motyw ciemny
   },
 });
 
