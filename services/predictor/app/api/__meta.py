@@ -1,16 +1,24 @@
-TITLE = "RESTfull FastAPI + NoSQL MongoDB - template"
+TITLE = "DepoFlowAI - Predictor"
 
 DESCRIPTION = """
 
-## Template Restfull API developed with *Python FastAPI* and integrated to cooperation with NoSQL database *MongoDB*
+## RESTfull API dla aplikacji **DepoFlowAI**.
+
+### Jednostka przystosowana do analizy danych ofert depozytowych banków i przewidywania potencjalnych zawahań na rynku. 
+
+### Dane składowane są w relacyjnej bazie danych SQL - *MariaDB*.
 
 """
 
-VERSION = "1.0.0"
+VERSION = "0.1.0"
 
 TAGS_METADATA = [    
     {
-        "name" : "Items",
-        "description" : "Items handling"
+        "name" : "DB",
+        "description" : "Obsługa bazy danych"
+    },
+    {
+        "name" : "Predict",
+        "description" : "Wizja przyszłości rynkowej"
     },
 ]

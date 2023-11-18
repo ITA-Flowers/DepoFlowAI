@@ -1,28 +1,50 @@
 version: '3.8'
 
 services:
-  mongo:
-    container_name: mongo
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+  maria:
+    image: mariadb:11.1
+    restart: always
+    container_name: maria
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
     volumes:
-      - ./db/vol:/data/db
+      - ./db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/vol:/var/lib/mysql
     ports:
-      - 9050:27017
+      - 9050:3306
+    healthcheck:
+      test: mariadb -u ${MARIADB_USER} -p${MARIADB_PASSWORD} -h maria
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
   predictor:
-    container_name: predictor
     build:
       context: ./predictor
       dockerfile: Dockerfile
+    restart: always
+    container_name: predictor
+    environment:
+      DEPOFLOWDB_USER: ${DEPOFLOWDB_USER}
+      DEPOFLOWDB_PASSWORD: ${DEPOFLOWDB_PASSWORD}
+      DEPOFLOWDB_NAME: ${DEPOFLOWDB_NAME}
     ports:
-      - 9080:9040
+      - 9040:8080
+    depends_on:
+      maria:
+        condition: service_healthy
     
   scrapper:
-    container_name: scrapper
     build:
       context: ./scrapper
       dockerfile: Dockerfile
+    container_name: scrapper
     ports:
-      - 8080:9030
+      - 9041:8080
+    depends_on:
+      predictor:
+        condition: service_started
