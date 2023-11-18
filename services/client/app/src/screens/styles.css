@@ -1,4 +1,6 @@
 /* Deklaracje zmiennych kolorów i tła w :root */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
 :root {
     --primary-100: #6A00FF;
     --primary-200: #a64aff;
@@ -27,9 +29,6 @@
     --font-size-h5: 1.2rem; /* Rozmiar czcionki dla nagłówka h5 w jednostkach rem */
     --font-size-h6: 1rem; /* Rozmiar czcionki dla nagłówka h6 w jednostkach rem */
   }
-  
-  /* Import czcionki z Google Fonts */
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
   
   /* Stylizacja dla całego body */
   body {
