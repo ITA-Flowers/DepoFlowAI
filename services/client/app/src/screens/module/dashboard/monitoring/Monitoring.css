@@ -15,7 +15,7 @@
 }
 
 .chart-dsh {
-  background-color: var(--bg-300) !important;
+  background-color: var(--bg-100) !important;
   color: var(--text-100);
   margin-bottom: 1rem;
 }
