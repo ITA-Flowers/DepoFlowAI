@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mongo:
+    container_name: mongo
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    volumes:
+      - ./db/vol:/val/lib/mongo
+    ports:
+      - 9050:27017
+
+  predictor:
+    container_name: predictor
+    build:
+      context: ./predictor
+      dockerfile: Dockerfile
+    ports:
+      - 8080:9040
+    
+  scrapper:
+    container_name: scrapper
+    build:
+      context: ./scrapper
+      dockerfile: Dockerfile
+    ports:
+      - 8080:9030
