@@ -9,7 +9,10 @@ import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { Typography } from "@mui/material";
-import { useClientsTypesService } from "../Charts/services/ServiceChart";
+import {
+  useClientsTypesService,
+  useBanksService,
+} from "../Charts/services/ServiceChart";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 5;
@@ -25,23 +28,11 @@ const minLength = 1;
 const minLimit = 1000;
 const minRate = 0.2;
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-
 const Filters = () => {
   const [bankName, setBankName] = React.useState([]);
   const [clientName, setClientName] = React.useState([]);
   const clients = useClientsTypesService();
+  const banks = useBanksService();
 
   const handleChangeBank = (event) => {
     const {
@@ -124,12 +115,18 @@ const Filters = () => {
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={bankName.indexOf(name) > -1} />
-              <ListItemText primary={name} />
+          {banks.length > 0 ? (
+            banks.map((item) => (
+              <MenuItem key={item.id} value={item}>
+                <Checkbox checked={bankName.indexOf(item) > -1} />
+                <ListItemText primary={item.name} />
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>
+              <ListItemText primary="Brak danych" />
             </MenuItem>
-          ))}
+          )}
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 200 }}>
@@ -144,12 +141,18 @@ const Filters = () => {
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {clients.map((item) => (
-            <MenuItem key={item.id} value={item}>
-              <Checkbox checked={clientName.indexOf(item) > -1} />
-              <ListItemText primary={item.name} />
+          {clients.length > 0 ? (
+            clients.map((item) => (
+              <MenuItem key={item.id} value={item}>
+                <Checkbox checked={clientName.indexOf(item) > -1} />
+                <ListItemText primary={item.name} />
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>
+              <ListItemText primary="Brak danych" />
             </MenuItem>
-          ))}
+          )}
         </Select>
       </FormControl>
       <Box sx={{ width: 200 }}>
