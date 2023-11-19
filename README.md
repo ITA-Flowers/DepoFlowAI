@@ -1,5 +1,7 @@
 # DepoFlowAI
 
+![image](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/6a4f266a-39d2-43fc-a32b-bdaf92429fa4)
+
 ## Deployment
 
 ### Guidance
@@ -16,7 +18,15 @@ Deploy using Docker-Compose:
 docker compose up
 ```
 
-Application will be available [here](http://localhost:9097/).
+Application will be available [here](http://localhost:9080/).
+
+## System architecture
+
+![architecture](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/dd118e3e-97ba-4200-8804-a5eb76b0e5b4)
+
+## Database model
+
+![image](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/6b637016-cae5-42e0-bb99-86aae510ba60)
 
 ## Repo structure
 
