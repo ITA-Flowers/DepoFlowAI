@@ -22,7 +22,7 @@ TAGS_METADATA = [
         "description" : "Obsługa głównych tabel bazy danych"
     },
     {
-        "name" : "Predict",
-        "description" : "Wizja przyszłości rynkowej"
+        "name" : "Points",
+        "description" : "Pozycje punktowe do wizualizacji danych"
     },
 ]

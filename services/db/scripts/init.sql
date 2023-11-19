@@ -32,7 +32,7 @@ CREATE TABLE `Offers`(
   percentage FLOAT NOT NULL,
   `time` INT,
   `limit` INT,
-  `url` VARCHAR(512),
+  `date` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `name` VARCHAR(256) NOT NULL,
   PRIMARY KEY(id)
 );
@@ -44,6 +44,11 @@ CREATE TABLE `OffersDataModels`(
   `newOffersCount` INT NOT NULL,
   PRIMARY KEY(id)
 );
+
+CREATE TABLE `ChartTypes`
+  (id INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(128) NOT NULL UNIQUE, PRIMARY KEY(id))
+  ;
+
 
 ALTER TABLE `Offers`
   ADD CONSTRAINT `id_bankId_FK`
@@ -89,3 +94,10 @@ INSERT INTO OfferTypes(id,name)
     VALUES (2,"forNewcommers");
 INSERT INTO OfferTypes(id,name)
     VALUES (3,"forNewFunds");
+
+
+INSERT INTO ChartTypes(id,name)
+  VALUES (1,"percentage");
+
+INSERT INTO ChartTypes(id,name)
+  VALUES (2,"newOffersCount");

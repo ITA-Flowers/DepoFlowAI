@@ -19,13 +19,13 @@ def create_offer(db : Session, offer : schemas.OfferCreate):
         percentage=offer.percentage,
         time=offer.time,
         limit=offer.limit,
-        url=offer.url,
         name=offer.name
     )
     
     db.add(new_offer)
     db.commit()
     db.refresh(new_offer)
+    print(new_offer)
     return new_offer
 
 def delete_offer(db : Session, db_offer : models.Offer):

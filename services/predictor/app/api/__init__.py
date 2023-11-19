@@ -6,7 +6,7 @@ from .__meta import (TITLE,
                     VERSION,
                     TAGS_METADATA)
 
-from .routes import db_router, offers_router
+from .routes import db_router, offers_router, points_router
 
 def init_api() -> FastAPI:
     api = FastAPI(
@@ -30,5 +30,6 @@ def init_api() -> FastAPI:
     )
     api.include_router(db_router)
     api.include_router(offers_router)
+    api.include_router(points_router)
     
     return api
