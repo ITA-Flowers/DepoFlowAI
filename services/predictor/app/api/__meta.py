@@ -15,7 +15,11 @@ VERSION = "0.1.0"
 TAGS_METADATA = [    
     {
         "name" : "DB",
-        "description" : "Obsługa bazy danych"
+        "description" : "Obsługa podrzędnych tabel bazy danych"
+    },
+    {
+        "name" : "Offers",
+        "description" : "Obsługa głównych tabel bazy danych"
     },
     {
         "name" : "Predict",
