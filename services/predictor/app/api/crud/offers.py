@@ -26,6 +26,7 @@ def create_offer(db : Session, offer : schemas.OfferCreate):
     db.add(new_offer)
     db.commit()
     db.refresh(new_offer)
+    print(new_offer)
     return new_offer
 
 def delete_offer(db : Session, db_offer : models.Offer):
