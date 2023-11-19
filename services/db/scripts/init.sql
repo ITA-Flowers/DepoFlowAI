@@ -101,3 +101,58 @@ INSERT INTO ChartTypes(id,name)
 
 INSERT INTO ChartTypes(id,name)
   VALUES (2,"newOffersCount");
+
+
+INSERT INTO Banks(name,domain)
+  VALUES ("Bank Handlowy w Warszawie SA","citibank.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Bank Millennium","bankmillennium.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Bank Nowy","banknowy.pl");
+
+INSERT INTO Banks(name,domain)
+  VALUES ("Bank Ochrony środowiska","bosbank.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("PEKAO SA","pekao.com.pl");
+
+INSERT INTO Banks(name,domain)
+  VALUES ("Bank Pocztowy SA","pocztowy.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("BNP Paribas Bank Polska SA","bnpparibas.pl");
+
+INSERT INTO Banks(name,domain)
+  VALUES ("Credit Agricole Bank Polska SA","credit-agricole.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Deutsche Bank Polska","country.db.com");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("ING Bank Sląski","ing.pl");
+
+INSERT INTO Banks(name,domain)
+  VALUES ("mBank","mbank.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Nest Bank","nestbank.pl");
+  
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Plus Bank","plusbank.pl");
+  
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Powszechna Kasa Oszczędności Bank Polski SA",".pkobp.pl");
+
+INSERT INTO Banks(name,domain)
+  VALUES ("Santander Bank Polska","santander.pl");
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("Toyota Bank Polska","toyotabank.pl");
+  
+  
+INSERT INTO Banks(name,domain)
+  VALUES ("VeloBank SA","velobank.pl");
