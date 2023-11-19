@@ -1,0 +1,31 @@
+.notification-container {
+  max-height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-300) !important;
+}
+
+.notification-container:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.title {
+    font-weight: bold !important;
+}
+
+.text-field {
+      color: var(--text-200) !important;
+      font-style: italic;
+      font-weight: 600 !important;
+}
+
+.name{
+    width: 100%;
+    background: linear-gradient(to right, var(--primary-100),var(--accent-100)) !important;
+    color: var(--text-100) !important;
+    border-radius: 1rem;
+    text-align: center;
+}

@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   maria:
@@ -37,7 +37,7 @@ services:
     depends_on:
       maria:
         condition: service_healthy
-    
+
   scrapper:
     build:
       context: ./scrapper
@@ -45,6 +45,17 @@ services:
     container_name: scrapper
     ports:
       - 9041:8080
+    depends_on:
+      predictor:
+        condition: service_started
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - 9080:5173
     depends_on:
       predictor:
         condition: service_started
