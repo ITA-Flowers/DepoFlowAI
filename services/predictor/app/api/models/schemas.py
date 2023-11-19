@@ -3,6 +3,9 @@ from pydantic import BaseModel
 class BankBase(BaseModel):
     name : str
     domain : str
+        
+class BankCreate(BankBase):
+    pass
 
 class Bank(BankBase):
     id : int
@@ -40,7 +43,33 @@ class ProductType(ProductTypeBase):
     class Config:
         from_attributes = True
         
-        
+
+class OfferBase(BaseModel):
+    percentage: float
+    time: int | None = None
+    limit: int | None = None
+    url: str | None = None
+    name: str
+    
+    
+class OfferCreate(OfferBase):
+    bank_id: int
+    client_id: int
+    product_type_id: int
+    offer_type_id: int
+    
+    
+class Offer(OfferBase):
+    id: int
+    bank: Bank
+    client: Client
+    product_type: ProductType
+    offerType: OfferType
+    
+    class Config:
+        from_attributes = True
+
+
 
 class ErrorResponseDefault(BaseModel):
     detail : str

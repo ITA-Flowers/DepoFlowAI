@@ -30,9 +30,9 @@ CREATE TABLE `Offers`(
   `productTypeId_FK` INT NOT NULL,
   `OfferTypeId_FK` INT NOT NULL,
   percentage FLOAT NOT NULL,
-  `time` INT NOT NULL,
-  `limit` INT NOT NULL,
-  `url` VARCHAR(512) NOT NULL,
+  `time` INT,
+  `limit` INT,
+  `url` VARCHAR(512),
   `name` VARCHAR(256) NOT NULL,
   PRIMARY KEY(id)
 );

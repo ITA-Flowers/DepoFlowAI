@@ -22,6 +22,7 @@ router = APIRouter(
     prefix="/api/db"
 )
 
+
 @router.get(path="/banks/{bank_id}", 
             response_model=schemas.Bank,
             status_code=status.HTTP_200_OK,
@@ -55,6 +56,56 @@ def read_bank(bank_id : int, db : Session = Depends(get_db_session)):
 def read_banks(skip : int = 0, limit : int = 100, db : Session = Depends(get_db_session)):
     objs = crud.get_banks(db, skip=skip, limit=limit)
     return objs
+
+@router.post(path="/banks",
+             response_model=schemas.Bank,
+             status_code=status.HTTP_201_CREATED,
+             description="Dodanie nowego podmiotu", 
+             response_description="Created bank entity",
+             responses={
+                 400: {
+                    "model": schemas.ErrorResponseDefault,
+                    "description": "Error : Bank already exists",
+                    "content": {
+                        "application/json": {
+                            "example": {"detail": "Bank already exists!"}
+                        }
+                    },
+                }
+             })
+def create_bank(bank : schemas.BankCreate, db : Session = Depends(get_db_session)):
+    db_obj = crud.get_bank_by_name(db, bank_name=bank.name)
+    if db_obj:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bank already exists!"
+        )
+    return crud.create_bank(db, bank=bank)
+
+@router.delete(path='/banks/{bank_id}',
+               status_code=status.HTTP_200_OK,
+               description="Usunięcie podmiotu o danym ID",
+               response_model=schemas.Bank, 
+               response_description="Bank successfully deleted",
+               responses={
+                    404: {
+                       "model": schemas.ErrorResponseDefault,
+                       "description": "Error : Bank not found",
+                       "content": {
+                           "application/json": {
+                               "example": {"detail": "Bank not found!"}
+                           }
+                       },
+                   }
+                })
+def delete_bank(bank_id : int, db : Session = Depends(get_db_session)):
+    db_obj = crud.get_bank(db, bank_id=bank_id)
+    if db_obj is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Bank not found!"
+        )
+    return crud.delete_bank(db, db_bank=db_obj)
 
 
 @router.get(path="/clients/{client_id}",
