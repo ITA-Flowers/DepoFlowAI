@@ -63,7 +63,7 @@ class Offer(OfferBase):
     id: int
     bank: Bank
     client: Client
-    product_type: ProductType
+    productType: ProductType
     offerType: OfferType
     
     class Config:

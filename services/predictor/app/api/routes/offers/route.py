@@ -94,7 +94,7 @@ def create_offer(offer : schemas.OfferCreate, db : Session = Depends(get_db_sess
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Offer type with id({offer.offer_type_id}) does not exists!"
         )
-        
+    
     return crud.create_offer(db, offer=offer)
 
 @router.delete(path='/offers/{offer_id}',
