@@ -38,24 +38,24 @@ services:
       maria:
         condition: service_healthy
 
-  scrapper:
-    build:
-      context: ./scrapper
-      dockerfile: Dockerfile
-    container_name: scrapper
-    ports:
-      - 9041:8080
-    depends_on:
-      predictor:
-        condition: service_started
+  # scrapper:
+  #   build:
+  #     context: ./scrapper
+  #     dockerfile: Dockerfile
+  #   container_name: scrapper
+  #   ports:
+  #     - 9041:8080
+  #   depends_on:
+  #     predictor:
+  #       condition: service_started
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: client
-    ports:
-      - 9080:5173
-    depends_on:
-      predictor:
-        condition: service_started
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   container_name: client
+  #   ports:
+  #     - 9080:5173
+  #   depends_on:
+  #     predictor:
+  #       condition: service_started

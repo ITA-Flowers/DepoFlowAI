@@ -15,11 +15,6 @@ def init_api() -> FastAPI:
         version=VERSION,
         openapi_tags=TAGS_METADATA
     )
-
-    # origins = [
-    #     "client",
-    #     "172.20.0.1",
-    # ]
     
     api.add_middleware(
         CORSMiddleware,
