@@ -81,6 +81,5 @@ class ChartType(ChartTypeBase):
     class Config:
         from_attributes = True
 
-
 class ErrorResponseDefault(BaseModel):
     detail : str
