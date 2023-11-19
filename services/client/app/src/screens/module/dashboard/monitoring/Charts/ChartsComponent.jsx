@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
-
 import {
   LineChart,
   XAxis,
@@ -14,35 +13,102 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { generateColor } from "./../../../utils/ColorsGenerator";
+import {
+  useChartTypesService,
+  usefetchChartDataService,
+} from "./services/ServiceChart";
 
-const data = [
-  { name: "Punkt A", x: 10, y1: 25, y2: 30, y3: 18, y4: 20 },
-  { name: "Punkt B", x: 20, y1: 15, y2: 40, y3: 28, y4: 25 },
-  { name: "Punkt C", x: 30, y1: 35, y2: 20, y3: 32, y4: 29 },
-  { name: "Punkt D", x: 40, y1: 20, y2: 25, y3: 38, y4: 12 },
-  { name: "Punkt E", x: 50, y1: 30, y2: 35, y3: 20, y4: 34 },
-];
+var dataChartSample = {
+  y: [
+    { name: "Punkt A", y: [25, 30, 18, 20] },
+    { name: "Punkt B", y: [15, 40, 28, 25] },
+    { name: "Punkt C", y: [35, 20, 32, 29] },
+    { name: "Punkt D", y: [20, 25, 38, 12] },
+    { name: "Punkt E", y: [30, 35, 20, 34] },
+  ],
+  x: [10, 20, 30, 40],
+};
 
-const dataSource = [
-  { id: 0, name: "Oprocentowanie" },
-  { id: 1, name: "Czas trwania" },
-  { id: 2, name: "Liczba nowych ofert" },
-];
+const Chart = ({ data, onDataChange }) => {
+  const [activeButton, setActiveButton] = useState(0);
+  const dataSource = useChartTypesService();
+  const [localData, setLocalData] = useState(0);
+  const [dataChart, setChartData] = useState(dataChartSample);
+  const yKeys = dataChart.y.map((point) => point.name);
 
-const Chart = () => {
-  const yKeys = Object.keys(data[0]).filter(
-    (key) => key !== "name" && key !== "x"
-  );
+  useEffect(() => {
+    if (dataSource.length > 0) {
+      handleButtonClick(0);
+    }
+  }, [dataSource]);
 
-  const [activeButton, setActiveButton] = useState(0); // Indeks aktywnego przycisku
+  // const bankIds = [2, 5];
+  // const clientTypeIds = [3, 6];
+  // const chartTypeId = 1;
+  // const limitRange = [0, 10];
+  // const interestRange = [0, 100000];
+  // const timeRange = [0, 10];
 
-  const handleButtonClick = (index) => {
-    setActiveButton(index);
-    // logika po kliknięciu przycisku
+  // Używamy funkcji usefetchChartDataService
+
+  useEffect(() => {
+    console.log("Dane zostały zmienione:", data);
+    // const dataChart1 = usefetchChartDataService(
+    //   bankIds,
+    //   clientTypeIds,
+    //   chartTypeId,
+    //   limitRange,
+    //   interestRange,
+    //   timeRange
+    // );
+    // setChartData(newData);
+    console.log(dataChart);
+  }, [dataChart]);
+
+  const fetchData = async () => {
+    try {
+      const newData = usefetchChartDataService(
+        data?.bankIds,
+        data?.clientTypeIds,
+        data?.chartTypeId,
+        data?.limitRange,
+        data?.interestRange,
+        data?.timeRange
+      );
+      setChartData(newData);
+    } catch (error) {
+      console.error("Błąd pobierania danych:", error);
+    }
   };
 
+  const handleButtonClick = async (index) => {
+    const newData = dataSource[index]?.id;
+    setLocalData(newData);
+    onDataChange(newData);
+    setActiveButton(index);
+  };
+  // /////////////////
+  // Tutaj możesz zdefiniować stan do przechowywania danych z endpointa
+
+  // const handleButtonClick = async (index) => {
+  //   const newData = dataSource[index]?.id;
+  //   setLocalData(newData);
+  //   onDataChange(newData);
+  //   setActiveButton(index);
+
+  //   const newDataChart = await usefetchChartDataService(
+  //     data?.bankIds,
+  //     data?.clientTypeIds,
+  //     dataSource[index]?.id,
+  //     data?.limitRange,
+  //     data?.interestRange,
+  //     data?.timeRange
+  //   );
+  //   setChartData(newDataChart);
+  // };
+
   return (
-    <div style={{ width: 100 + "%" }}>
+    <div style={{ width: "100%" }}>
       <Box
         sx={{
           display: "flex",
@@ -54,11 +120,11 @@ const Chart = () => {
         }}
       >
         <ButtonGroup size="small" aria-label="small button group">
-          {dataSource.map((item) => (
+          {dataSource.map((item, index) => (
             <Button
-              key={item.id}
-              onClick={() => handleButtonClick(item.id)}
-              variant={item.id === activeButton ? "contained" : "outlined"}
+              key={index}
+              onClick={() => handleButtonClick(index)}
+              variant={index === activeButton ? "contained" : "outlined"}
             >
               {item.name}
             </Button>
@@ -67,13 +133,18 @@ const Chart = () => {
       </Box>
       <ResponsiveContainer width="100%" height={500}>
         <LineChart
-          data={data}
+          data={dataChart.x.map((xValue, index) => ({
+            x: xValue,
+            ...dataChart.y.reduce(
+              (acc, item) => ({ ...acc, [item.name]: item.y[index] }),
+              {}
+            ),
+          }))}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="x"
-            type="number"
             label={{
               value: "Data",
               position: "insideBottom",
@@ -82,7 +153,7 @@ const Chart = () => {
           />
           <YAxis
             label={{
-              value: dataSource[activeButton]?.name, // podmiana wyświetlania
+              value: dataSource[activeButton]?.name,
               angle: -90,
               position: "insideLeft",
             }}
@@ -96,7 +167,7 @@ const Chart = () => {
               dataKey={yKey}
               stroke={generateColor(index)}
               activeDot={{ r: 8 }}
-              name={data[index].name}
+              name={yKey}
             />
           ))}
         </LineChart>

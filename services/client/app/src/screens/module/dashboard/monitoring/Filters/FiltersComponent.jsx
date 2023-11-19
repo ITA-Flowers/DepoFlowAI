@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,7 +10,12 @@ import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { Typography } from "@mui/material";
-import { useClientsTypesService } from "../Charts/services/ServiceChart";
+import {
+  useClientsTypesService,
+  useBanksService,
+  usefetchChartDataService,
+} from "../Charts/services/ServiceChart";
+import { Button } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 5;
@@ -21,93 +27,92 @@ const MenuProps = {
     },
   },
 };
-const minLength = 1;
-const minLimit = 1000;
-const minRate = 0.2;
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-
-const Filters = () => {
+const Filters = ({ data, onDataChange }) => {
   const [bankName, setBankName] = React.useState([]);
   const [clientName, setClientName] = React.useState([]);
+  const [filterParams, setFilterParams] = React.useState({
+    bankIds: [],
+    clientTypeIds: [],
+    chartTypeId: 0,
+    limitRange: [0, 1000000],
+    lengthRange: [1, 60],
+    rateRange: [0, 20],
+  });
+
+  const [localData, setLocalData] = useState(null);
+
   const clients = useClientsTypesService();
+  const banks = useBanksService();
 
   const handleChangeBank = (event) => {
     const {
       target: { value },
     } = event;
-    setBankName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setBankName(typeof value === "string" ? value.split(",") : value);
+
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      bankIds: value.map(
+        (bankName) => banks.find((item) => item.name === bankName).id
+      ),
+    }));
   };
 
   const handleChangeClient = (event) => {
     const {
       target: { value },
     } = event;
-    setClientName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setClientName(typeof value === "string" ? value.split(",") : value);
+    console.log(clientName);
+
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      clientTypeIds: value.map(
+        (clientName) => clients.find((item) => item.name === clientName).id
+      ),
+    }));
   };
 
   /////////// *** sliders *** ////////////
 
-  const [limit, setLimit] = React.useState([0, 1000000]);
-  const [length, setLength] = React.useState([1, 60]);
-  const [rate, setRate] = React.useState([1, 10]);
-
-  const handleLimit = (event, newValue, activeThumb) => {
+  const handleLimit = (event, newValue) => {
     if (!Array.isArray(newValue)) {
       return;
     }
 
-    if (activeThumb === 0) {
-      setLimit([Math.min(newValue[0], limit[1] - minLimit), limit[1]]);
-    } else {
-      setLimit([limit[0], Math.max(newValue[1], limit[0] + minLimit)]);
-    }
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      limitRange: newValue,
+    }));
   };
 
-  const handleLength = (event, newValue, activeThumb) => {
+  const handleLength = (event, newValue) => {
     if (!Array.isArray(newValue)) {
       return;
     }
 
-    if (newValue[1] - newValue[0] < minLength) {
-      if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 100 - minLength);
-        setLength([clamped, clamped + minLength]);
-      } else {
-        const clamped = Math.max(newValue[1], minLength);
-        setLength([clamped - minLength, clamped]);
-      }
-    } else {
-      setLength(newValue);
-    }
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      lengthRange: newValue,
+    }));
   };
-  const handleRate = (event, newValue, activeThumb) => {
+
+  const handleRate = (event, newValue) => {
     if (!Array.isArray(newValue)) {
       return;
     }
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      rateRange: newValue,
+    }));
+  };
 
-    if (activeThumb === 0) {
-      setRate([Math.min(newValue[0], rate[1] - minRate), limit[1]]);
-    } else {
-      setRate([limit[0], Math.max(newValue[1], rate[0] + minRate)]);
-    }
+  const handleGetDataWithFilters = () => {
+    filterParams.chartTypeId = data;
+    setLocalData(filterParams);
+    onDataChange(filterParams);
+    console.log(filterParams);
   };
 
   return (
@@ -124,12 +129,22 @@ const Filters = () => {
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={bankName.indexOf(name) > -1} />
-              <ListItemText primary={name} />
+          {banks.length > 0 ? (
+            banks.map((item) => (
+              <MenuItem
+                key={item.id}
+                value={item}
+                selected={bankName.indexOf(item) > -1}
+              >
+                <Checkbox checked={bankName.indexOf(item) > -1} />
+                <ListItemText primary={item.name} />
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>
+              <ListItemText primary="Brak danych" />
             </MenuItem>
-          ))}
+          )}
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 200 }}>
@@ -144,38 +159,55 @@ const Filters = () => {
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {clients.map((item) => (
-            <MenuItem key={item.id} value={item}>
-              <Checkbox checked={clientName.indexOf(item) > -1} />
-              <ListItemText primary={item.name} />
+          {clients.length > 0 ? (
+            clients.map((item) => (
+              <MenuItem
+                key={item.id}
+                value={item.name}
+                selected={clientName.indexOf(item.name) > -1}
+              >
+                <Checkbox checked={clientName.indexOf(item.name) > -1} />
+                <ListItemText primary={item.name} />
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>
+              <ListItemText primary="Brak danych" />
             </MenuItem>
-          ))}
+          )}
         </Select>
       </FormControl>
       <Box sx={{ width: 200 }}>
         <CustomSlider
           label="Limit depozytu"
-          value={limit}
+          value={filterParams.limitRange}
           onChange={handleLimit}
           min={0}
           max={500000}
         />
         <CustomSlider
           label="Zapadalność w miesiącach"
-          value={length}
+          value={filterParams.lengthRange}
           onChange={handleLength}
           min={1}
           max={60}
         />
         <CustomSlider
           label='Oprocentowanie w "%"'
-          value={rate}
+          value={filterParams.rateRange}
           onChange={handleRate}
           min={0}
           max={20}
           step={0.1}
         />
       </Box>
+      <Button
+        style={{ width: 100 + "%", marginTop: 1 + "rem" }}
+        variant="contained"
+        onClick={handleGetDataWithFilters}
+      >
+        Wybierz
+      </Button>
     </div>
   );
 };

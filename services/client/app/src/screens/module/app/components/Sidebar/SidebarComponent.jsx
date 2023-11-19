@@ -8,11 +8,13 @@ import bank from "./assets/bank.png";
 import monitoring from "./assets/monitoring.png";
 import prediction from "./assets/prediction.png";
 import notification from "./assets/notification.png";
+import settings from "./assets/sethings.png";
 
 const Sidebar = () => {
   const monitoringMatch = useMatch("/monitoring");
   const predykcjaMatch = useMatch("/predykcja");
   const notificationMatch = useMatch("/notification");
+  const settingsMatch = useMatch("/settings");
 
   return (
     <Stack direction="row" alignItems="flex-start">
@@ -67,6 +69,20 @@ const Sidebar = () => {
                 <img src={notification} alt="Powiadomienia" />
               </Avatar>
               <h6>Powiadomienia</h6>
+            </Stack>
+          </Link>
+              {/* Ustawienia */}
+              <Link to="/settings">
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              className={settingsMatch ? "button active" : "button"}
+            >
+              <Avatar sx={{ bgcolor: "#6A00FF" }} variant="rounded">
+                <img src={settings} alt="ustawienia" />
+              </Avatar>
+              <h6>Ustawienia</h6>
             </Stack>
           </Link>
         </Stack>
