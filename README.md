@@ -20,6 +20,13 @@ docker compose up
 
 Application will be available [here](http://localhost:9080/).
 
+## UI
+
+![image](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/ba535892-1513-4fea-b264-e5549a4cf7fc)
+
+![image](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/24cd95a6-389f-495a-b864-48f40facaf49)
+
+
 ## System architecture
 
 ![architecture](https://github.com/ITA-Flowers/DepoFlowAI/assets/74451381/dd118e3e-97ba-4200-8804-a5eb76b0e5b4)
