@@ -19,7 +19,6 @@ def create_offer(db : Session, offer : schemas.OfferCreate):
         percentage=offer.percentage,
         time=offer.time,
         limit=offer.limit,
-        url=offer.url,
         name=offer.name
     )
     

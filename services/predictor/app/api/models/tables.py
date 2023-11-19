@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date, func
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -36,10 +36,10 @@ class Offer(Base):
     clientId_FK = Column(Integer, ForeignKey('Clients.id'), nullable=False)
     productTypeId_FK = Column(Integer, ForeignKey('ProductTypes.id'), nullable=False)
     offerTypeId_FK = Column(Integer, ForeignKey('OfferTypes.id'), nullable=False)
+    date = Column(Date, nullable=False, default=func.current_date())
     percentage = Column(Float, nullable=False)
     time = Column(Integer, nullable=True)
     limit = Column(Integer, nullable=True)
-    url = Column(String(512), nullable=True)
     name = Column(String(256), nullable=False)
 
     bank = relationship("Bank")
@@ -56,3 +56,9 @@ class OffersDataModel(Base):
     newOffersCount = Column(Integer, nullable=False)
 
     offer = relationship("Offer")
+
+
+class ChartType(Base):
+    __tablename__ = 'ChartTypes'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128), nullable=False, unique=True)

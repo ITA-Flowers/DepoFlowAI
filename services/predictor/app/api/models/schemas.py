@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from datetime import date
+
 
 class BankBase(BaseModel):
     name : str
@@ -48,7 +50,6 @@ class OfferBase(BaseModel):
     percentage: float
     time: int | None = None
     limit: int | None = None
-    url: str | None = None
     name: str
     
     
@@ -61,6 +62,7 @@ class OfferCreate(OfferBase):
     
 class Offer(OfferBase):
     id: int
+    date: date
     bank: Bank
     client: Client
     productType: ProductType
@@ -69,6 +71,15 @@ class Offer(OfferBase):
     class Config:
         from_attributes = True
 
+
+class ChartTypeBase(BaseModel):
+    name: str
+    
+class ChartType(ChartTypeBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
 
 
 class ErrorResponseDefault(BaseModel):
