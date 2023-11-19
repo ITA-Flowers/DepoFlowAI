@@ -1,6 +1,5 @@
-// BankTable.js
-import React, { useState } from 'react';
-import { Bank } from '../../../dashboard/monitoring/Charts/models/ModelBanks';
+
+import React, { useState, useEffect } from 'react';
 import { backendUrl } from '../../../../../env';
 import {
   Table,
@@ -19,20 +18,45 @@ import {
 } from '@mui/material';
 
 const BankTable = () => {
-  const [banks, setBanks] = useState([
-    new Bank(1, 'Bank A', 'https://www.bankA.com'),
-    new Bank(2, 'Bank B', 'https://www.bankB.com'),
-    // ...initial banks
-  ]);
-
+  const [banks, setBanks] = useState([]);
   const [newBankName, setNewBankName] = useState('');
   const [newBankLink, setNewBankLink] = useState('');
   const [isDialogOpen, setDialogOpen] = useState(false);
 
+  const fetchBanks = () => {
+    fetch(`${backendUrl}api/db/banks`)
+      .then(response => response.json())
+      .then(data => setBanks(data))
+      .catch(error => console.error('Błąd podczas pobierania listy banków:', error));
+  };
+
+  useEffect(() => {
+    fetchBanks();
+  }, []); // Pobranie danych przy załadowaniu komponentu
+
   const handleAddBank = () => {
     if (newBankName && newBankLink) {
-      const newBank = new Bank(banks.length + 1, newBankName, newBankLink);
-      setBanks([...banks, newBank]);
+      fetch(`${backendUrl}api/db/banks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newBankName,
+          domain: newBankLink,
+        }),
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.log('Odpowiedź z serwera po dodaniu banku:', result);
+      
+          setBanks([...banks, result]);
+        })
+        .catch(error => {
+          console.error('Błąd podczas wysyłania żądania:', error);
+       
+        });
+
       setNewBankName('');
       setNewBankLink('');
       setDialogOpen(false);
@@ -40,8 +64,20 @@ const BankTable = () => {
   };
 
   const handleDeleteBank = (id) => {
-    const updatedBanks = banks.filter((bank) => bank.id !== id);
-    setBanks(updatedBanks);
+    fetch(`${backendUrl}api/db/banks/${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log('Odpowiedź z serwera po usunięciu banku:', result);
+        
+        const updatedBanks = banks.filter(bank => bank.id !== id);
+        setBanks(updatedBanks);
+      })
+      .catch(error => {
+        console.error('Błąd podczas wysyłania żądania:', error);
+       
+      });
   };
 
   return (
@@ -53,7 +89,7 @@ const BankTable = () => {
               <TableCell>ID</TableCell>
               <TableCell>Nazwa banku</TableCell>
               <TableCell>Link do strony</TableCell>
-              <TableCell>Działanie</TableCell>
+              <TableCell>Akcje</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,7 +98,7 @@ const BankTable = () => {
                 <TableCell colSpan={4}>Brak danych</TableCell>
               </TableRow>
             ) : (
-              banks.map((bank) => (
+              banks.map(bank => (
                 <TableRow key={bank.id}>
                   <TableCell>{bank.id}</TableCell>
                   <TableCell>{bank.name}</TableCell>
@@ -78,7 +114,7 @@ const BankTable = () => {
                   <TableCell>
                     <Button
                       variant="contained"
-                      style={{ backgroundColor: '#6A00FF', color: 'white' }}
+                      style={{ backgroundColor: '#FF0000', color: 'white' }}
                       onClick={() => handleDeleteBank(bank.id)}
                     >
                       Usuń
